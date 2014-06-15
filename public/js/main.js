@@ -30,7 +30,7 @@ function prepareTemplateData(url, ids) {
     var api = new RedmineAPI({ url: url });
 
     var issuesPromises = ids.map(function(id) {
-        return api.getIssueById(id).catch(console.error);
+        return api.getIssueById(id);
     } );
 
     return Promise.all(issuesPromises).then(function(issues) {
