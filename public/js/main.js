@@ -4,29 +4,36 @@ Handlebars.registerHelper('lc', function(text) {
     return text ? text.toLowerCase() : '';
 });
 
-function generateCards( url, ids ) {
-    if (!Promise) {
-        alert('Use modern browser with Promise support http://caniuse.com/#search=promise');
+function generateCards() {
+    var url      = $('#url').val();
+    var ids      = $('#ids').val().split(/\s*,\s*/).filter(function(id) {return id.match(/^\d+$/)});
+    var template = Handlebars.compile( $('#cards-template').html() );
+
+    if (!url || !ids.length) {
+        alert('Check fields');
         return;
     }
 
+    prepareTemplateData(url, ids).then(function(data) {
+        $('#cards').html( template(data) );
+    });
+}
+
+function init() {
+    $('#submit').click(generateCards);
+}
+
+function prepareTemplateData(url, ids) {
     var api = new RedmineAPI({ url: url });
 
     var issuesPromises = ids.map(function(id) {
         return api.getIssueById(id);
     } );
 
-    var template = Handlebars.compile( $('#cards-template').html() );
-
-    Promise.all(issuesPromises).then(function(issues) {
-        var context = { issues: splitArray(issues,2) };
-        var html = template(context);
-
-
-        $('#cards').html(html);
+    return Promise.all(issuesPromises).then(function(issues) {
+        return { issues: splitArray(issues,2) };
     }).catch(console.error);
 }
-
 
 function splitArray(array, step) {
     var newArray = [];
@@ -45,17 +52,3 @@ function splitArray(array, step) {
 
     return newArray;
 }
-
-
-function init() {
-    $('#submit').click(function() {
-        var url = $('#url').val();
-        var ids = $('#ids').val();
-
-        if (url && ids) {
-            var ids = ids.split(/\s*,\s*/);
-            generateCards(url, ids);
-        }
-    });
-}
-
