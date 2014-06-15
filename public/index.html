@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Scrum cards</title>
+
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+
+    <script type="text/javascript" src='js/3d-party/jquery.js'></script>
+    <script type="text/javascript" src='js/3d-party/handlebars.js'></script>
+    <script type="text/javascript" src='js/3d-party/promise-4.0.0.js'></script>
+
+    <script type="text/javascript" src='js/RedmineAPI.js'></script>
+    <script type="text/javascript" src='js/main.js'></script>
+
+    <script type="text/javascript">
+        $(document).ready(init);
+    </script>
+</head>
+<body>
+    <div>
+        <form>
+            <input id='url' type='text' placeholder='Enter redmine URL' />
+            <input id='ids'type='text' placeholder='Enter issues ids' />
+
+            <input id='submit' type='button' value='submit' />
+        </form>
+    </div>
+
+    <dic id="cards"></dic>
+
+
+    <!-- TEMPLATES -->
+    <script  id='cards-template' type="text/template">
+        <table>
+            {{#each issues}}
+                <tr>
+                    {{#each this}}
+                    <td>
+                        <div class='card {{lc tracker.name}}'>
+                            <div class='title'> <span class='tracker'>{{tracker.name}} </span> #{{id}}  {{#if assigned_to.name}}({{assigned_to.name}}) {{/if}}</div>
+                            <div class='body'>
+                                <div class='description'>
+                                    {{subject}}
+                                </div>
+
+                                <br />
+
+                                {{#if children}}
+                                    <div>
+                                        <div class='subtitle'> Subtasks </div>
+                                        <div class='subtasks'>
+                                            {{#each children}}
+                                                #{{id}} - {{subject}} <br />
+                                            {{/each}}
+                                        </div>
+                                    </div>
+                                {{/if}}
+
+                                {{#if parent}}
+                                    <div>
+                                        <div class='subtitle'> {{parent.tracker.name}} </div>
+                                        #{{parent.id}} - {{parent.subject}}
+                                    </div>
+                                {{/if}}
+
+                            </div>
+
+                            <div class='footer'>{{category.name}}</div>
+                        </div>
+                    </td>
+                    {{/each}}
+                </tr>
+            {{/each}}
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,56 @@
+ .card {
+    position: relative;
+    border: 3px solid black;
+    width: 300px;
+    height: 300px;
+    padding: 5px;
+    font-size: 1.1em;
+}
+
+.card.story {
+    background-color: yellow;
+}
+
+.card.task {
+    background-color: lightblue;
+}
+
+.card .title {
+    position: relative;
+    border-bottom: 1px solid black;
+    width: 100%;
+    height: 30px;
+    vertical-align: middle;
+    font-size: 1.2em;
+    text-align: center;
+    font-weight: bold;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.card .title .tracker {
+    text-transform:uppercase;
+}
+
+.card .footer {
+    position: absolute;
+    border-top: 1px solid black;
+    width: 300px;
+    height: 30px;
+    bottom: 5px;
+    font-size: 1.5em;
+    text-align: center;
+}
+
+.card .subtitle {
+    text-align: center;
+    font-weight: bold;
+}
+
+.card .description {
+    text-align: justify;
+}
+
+.card .subtasks {
+    font-size: 0.8em;
+}
