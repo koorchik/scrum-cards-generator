@@ -14,12 +14,15 @@ function generateCards() {
         return;
     }
 
+    localStorage.redmineURL = url;
+
     prepareTemplateData(url, ids).then(function(data) {
         $('#cards').html( template(data) );
     });
 }
 
 function init() {
+    $('#url').val( localStorage.redmineURL || '' );
     $('#submit').click(generateCards);
 }
 
