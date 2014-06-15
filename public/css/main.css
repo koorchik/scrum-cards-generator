@@ -1,4 +1,15 @@
- .card {
+table {
+    page-break-inside:auto;
+    border-collapse: separate;
+    border-spacing: 15px;
+}
+
+tr {
+    page-break-inside:avoid;
+    page-break-after:auto
+}
+
+.card {
     position: relative;
     border: 3px solid black;
     width: 300px;
@@ -21,7 +32,7 @@
     width: 100%;
     height: 30px;
     vertical-align: middle;
-    font-size: 1.2em;
+    font-size: 1.1em;
     text-align: center;
     font-weight: bold;
     overflow: hidden;
@@ -40,6 +51,7 @@
     bottom: 5px;
     font-size: 1.5em;
     text-align: center;
+    padding-top: 5px;
 }
 
 .card .subtitle {
@@ -49,6 +61,7 @@
 
 .card .description {
     text-align: justify;
+    padding-top: 5px;
 }
 
 .card .subtasks {
